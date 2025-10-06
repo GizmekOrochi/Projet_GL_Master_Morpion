@@ -6,7 +6,15 @@ import java.util.List;
 public class GameGrid {
     private int sizeX;
     private int sizeY;
-    private List<GamePlay> history = new ArrayList<>();
+    private Symbol[][] grid;
+
+    public GameGrid(int sizeX, int sizeY) {
+        this.sizeX = sizeX;
+        this.sizeY = sizeY;
+        this.grid = new Symbol[sizeX][sizeY];
+    }
+
+    public GameGrid() {}
 
     public int[] getSize() {
         return new int[]{sizeX, sizeY};
@@ -15,26 +23,41 @@ public class GameGrid {
     public void setSize(int sizeX, int sizeY) {
         this.sizeX = sizeX;
         this.sizeY = sizeY;
+        this.grid = new Symbol[sizeX][sizeY];
     }
 
-    public List<GamePlay> getHistory() {
-        return history;
-    }
-
-    public void setHistory(List<GamePlay> history) {
-        this.history = history;
-    }
-
-    // Optionnel : utilitaires pratiques
-
-    public void addPlay(GamePlay play) {
-        history.add(play);
-    }
-
-    public GamePlay undoLastPlay() {
-        if (!history.isEmpty()) {
-            return history.remove(history.size() - 1);
+    public void initializeGrid(Symbol defaultValue) {
+        for (int x = 0; x < sizeX; x++) {
+            for (int y = 0; y < sizeY; y++) {
+                grid[x][y] = defaultValue;
+            }
         }
-        return null;
+    }
+
+    public void setCell(int x, int y, Symbol symbol) {
+        if (inBounds(x, y)) {
+            grid[x][y] = symbol;
+        } else {
+            throw new IndexOutOfBoundsException("Coordinates out of bounds: " + x + ", " + y);
+        }
+    }
+
+    public Symbol getCell(int x, int y) {
+        if (inBounds(x, y)) {
+            return grid[x][y];
+        }
+        throw new IndexOutOfBoundsException("Coordinates out of bounds: " + x + ", " + y);
+    }
+
+    public void clearGrid() {
+        for (int x = 0; x < sizeX; x++) {
+            for (int y = 0; y < sizeY; y++) {
+                grid[x][y] = null;
+            }
+        }
+    }
+
+    private boolean inBounds(int x, int y) {
+        return x >= 0 && x < sizeX && y >= 0 && y < sizeY;
     }
 }

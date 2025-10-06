@@ -11,6 +11,7 @@ public class GameManager {
 
     private GameGrid gameGrid;
     private List<Player> players = new ArrayList<>();
+    private List<GamePlay> history = new ArrayList<>();
 
     public void initializeGame() {}
     public void gameLoop() {}
@@ -27,5 +28,24 @@ public class GameManager {
 
     public void setPause(boolean gameLoop) {
         this.pause = gameLoop;
+    }
+
+        public List<GamePlay> getHistory() {
+        return history;
+    }
+
+    public void setHistory(List<GamePlay> history) {
+        this.history = history;
+    }
+
+    public void addPlay(GamePlay play) {
+        history.add(play);
+    }
+
+    public GamePlay undoLastPlay() {
+        if (!history.isEmpty()) {
+            return history.remove(history.size() - 1);
+        }
+        return null;
     }
 }
