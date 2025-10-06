@@ -1,22 +1,22 @@
 package model;
 
 public class GamePlay {
-    private int playerIndex;
+    private Symbol playerSymbol;
     private int x;
     private int y;
 
-    public GamePlay(int playerIndex, int x, int y) {
-        this.playerIndex = playerIndex;
+    public GamePlay(Symbol playerSymbol, int x, int y) {
+        this.playerSymbol = playerSymbol;
         this.x = x;
         this.y = y;
     }
 
-    public int getPlayerIndex() {
-        return playerIndex;
+    public Symbol getplayerSymbol() {
+        return playerSymbol;
     }
 
-    public void setPlayerIndex(int playerIndex) {
-        this.playerIndex = playerIndex;
+    public void setplayerSymbol(Symbol playerSymbol) {
+        this.playerSymbol = playerSymbol;
     }
 
     public int getX() {
