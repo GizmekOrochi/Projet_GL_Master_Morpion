@@ -2,8 +2,11 @@ package view;
 
 import javafx.application.Application;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import javafx.scene.Scene;
+import javafx.scene.*;
+
+
 
 public abstract class Scene extends Application{
 
@@ -14,8 +17,13 @@ public abstract class Scene extends Application{
     public void update() {}
 
     public void start(Stage primaryStage) throws Exception {
+
+        StackPane root = new StackPane();
+
+        CreateGameScene createGameScene = new CreateGameScene(root, primaryStage);
+
         primaryStage.setTitle("Morpion");
-        primaryStage.setScene(new Scene(new Pane(), 800, 600));
+        primaryStage.setScene(createGameScene);
         primaryStage.show();
     }
 

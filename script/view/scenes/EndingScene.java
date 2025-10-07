@@ -1,5 +1,6 @@
 package view;
 
+
 public class EndingScene extends Scene {
     public EndingScene() {
         super();
@@ -10,8 +11,8 @@ public class EndingScene extends Scene {
     public void backToMenu() {}
 
     @Override
-    public void dysplay() {
-        super.dysplay();
+    public void display() {
+        super.display();
     }
 
     @Override

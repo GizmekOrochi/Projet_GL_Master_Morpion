@@ -8,7 +8,9 @@ public class ViewManager {
 
     private Scene scene;
 
-    public ViewManager(Stage primaryStage) {}
+    public ViewManager(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+    }
 
     public void showCreateGameScene(){}
 
