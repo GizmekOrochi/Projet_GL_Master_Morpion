@@ -1,8 +1,11 @@
 package model.player;
 
+import model.util.PlayerMove;
+
 public class HumanPlayer extends Player {
     @Override
-    public void takeTurn() {
+    public PlayerMove takeTurn() {
         // interaction utilisateur
+        return null;
     }
 }

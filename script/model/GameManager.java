@@ -1,7 +1,10 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import model.grid.*;
 import model.player.*;
 import model.util.*;
@@ -17,14 +20,20 @@ public class GameManager {
     private List<PlayerMove> history = new ArrayList<>();
 
     public void initializeGame() {}
+
     public void gameLoop() {
         for(Player p : players) {
             playerTurn(p);
             if(checkEndOfGame())
-            {
                 break;
-            }
         }
+    }
+
+    public void playerTurn(Player player) {
+        PlayerMove move = player.takeTurn();
+        updateHistory(move);
+        updatePlayerGrid(move);
+        updatePlayerScore(move);
     }
 
     // =============================================
@@ -47,6 +56,10 @@ public class GameManager {
     private int[] checkAllCellSequences(int x, int y) {
         int[] scores = new int[players.size()];
 
+        // Ensemble des cellules déjà utilisées par une séquence gagnante
+        Set<int[]> usedCells = new HashSet<>();
+
+        // Les 4 directions à explorer : → ↓ ↘ ↗
         int[][] directions = {
                 {1, 0},  // ligne horizontale
                 {0, 1},  // colonne verticale
@@ -54,24 +67,36 @@ public class GameManager {
                 {1, -1}  // diagonale ↗
         };
 
-        for(int[] dir : directions) {
+        for (int[] dir : directions) {
             int dx = dir[0];
             int dy = dir[1];
 
+            // On va tester toutes les positions de départ possibles d'une séquence
             for (int offset = -(sequence_length - 1); offset <= 0; offset++) {
                 CellContent[] sequence = new CellContent[sequence_length];
+                List<int[]> sequencePoints = new ArrayList<>();
 
+                // Construction de la séquence
                 for (int k = 0; k < sequence_length; k++) {
                     int newX = x + (offset + k) * dx;
                     int newY = y + (offset + k) * dy;
 
                     sequence[k] = gameGrid.getCell(newX, newY);
+                    sequencePoints.add(new int[]{newX, newY});
                 }
 
-                // On vérifie la séquence
-                if(checkSequence(sequence)) {
-                    int
-                    scores[0]++;
+                // Vérifie si la séquence est gagnante (et non nulle)
+                if (checkSequence(sequence)) {
+                    // Vérifie si une des cellules est déjà utilisée
+                    boolean overlap = sequencePoints.stream().anyMatch(usedCells::contains);
+                    if (!overlap) {
+                        // Séquence valide et non-overlappée : on compte le point
+                        int player = ((Symbol) sequence[0]).getSymbol().ordinal();
+                        scores[player]++;
+
+                        // Et on marque les cellules comme utilisées
+                        usedCells.addAll(sequencePoints);
+                    }
                 }
             }
         }
@@ -107,28 +132,29 @@ public class GameManager {
     }
     // =============================================
 
-    public void playerTurn(Player player) {
-        PlayerMove move = player.takeTurn();
-        updateHistory(move);
-        updatePlayerGrid(move);
-        updatePlayerScore(move);
-    }
-
+    // =============================================
+    // UPDATES
     private void updateHistory(PlayerMove move) {
         // On n'ajoute le move à l'historique QUE si c'est un ajout
         if(move.getAction() == 1)
             history.add(move);
             // Si ce n'est pas un ajout, il faut retirer le move correspondant dans l'historique
         else {
-            for(PlayerMove m : history) {
-                if(m.corresponds(move))
-                    history.remove(m);
-            }
+            history.removeIf(m -> m.corresponds(move));
         }
     }
-
-    public void updatePlayerGrid(PlayerMove move) {}
-    public void updatePlayerScore(PlayerMove move) {}
+    public void updatePlayerGrid(PlayerMove move) {
+        for(Player p : players)
+            p.updateGrid(move);
+    }
+    public void updatePlayerScore(PlayerMove move) {
+        int[] scores = checkAllCellSequences(move.getX(), move.getY());
+        for(int i = 0; i < scores.length; i++) {
+            Player p = players.get(i);
+            p.setScore(p.getScore() + scores[i]);
+        }
+    }
+    // =============================================
 
     public void gameHint() {}
     public void changeRoles() {}

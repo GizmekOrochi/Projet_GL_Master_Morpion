@@ -11,6 +11,10 @@ public abstract class Player {
     public void placeSymbol() {}
     public void removeSymbol() {}
 
+    public void updateGrid(PlayerMove move) {
+        grid.updateGrid(move);
+    }
+
     public int getScore() {
         return score;
     }

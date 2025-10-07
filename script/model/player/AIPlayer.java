@@ -1,6 +1,7 @@
 package model.player;
 
 import model.grid.AlgorithmGrid;
+import model.util.PlayerMove;
 
 public class AIPlayer extends Player {
     private int agressivity;
@@ -15,7 +16,8 @@ public class AIPlayer extends Player {
     }
 
     @Override
-    public void takeTurn() {
+    public PlayerMove takeTurn() {
         // logique IA
+        return null;
     }
 }
