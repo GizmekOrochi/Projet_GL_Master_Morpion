@@ -17,7 +17,15 @@ public class GameManager {
     private List<HistoryMove> history = new ArrayList<>();
 
     public void initializeGame() {}
-    public void gameLoop() {}
+    public void gameLoop() {
+        for(Player p : players) {
+            playerTurn(p);
+            if(checkEndOfGame())
+            {
+                break;
+            }
+        }
+    }
 
     // =============================================
     // CHECKS : symbol sequences & end of game
@@ -85,7 +93,9 @@ public class GameManager {
     }
     // =============================================
 
-    public void playerTurn(Player player) {}
+    public void playerTurn(Player player) {
+        player.takeTurn();
+    }
     public void gameHint() {}
     public void changeRoles() {}
     public void updatePlayerGrid() {}
