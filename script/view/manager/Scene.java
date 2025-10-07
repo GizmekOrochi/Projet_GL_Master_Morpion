@@ -10,4 +10,5 @@ public abstract class Scene {
     public void dysplay() {}
 
     public void update() {}
+
 }
