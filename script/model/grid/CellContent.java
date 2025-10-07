@@ -1,4 +1,4 @@
-package model;
+package model.grid;
 
 public abstract class CellContent {
     protected int Xpos;

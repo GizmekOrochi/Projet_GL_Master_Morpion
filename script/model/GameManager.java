@@ -2,6 +2,9 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import model.grid.*;
+import model.player.*;
+import model.util.*;
 
 public class GameManager {
     private int sequence_length;
@@ -11,7 +14,7 @@ public class GameManager {
 
     private GameGrid gameGrid;
     private List<Player> players = new ArrayList<>();
-    private List<GamePlay> history = new ArrayList<>();
+    private List<HistoryMove> history = new ArrayList<>();
 
     public void initializeGame() {}
     public void gameLoop() {}
@@ -30,21 +33,21 @@ public class GameManager {
         this.pause = gameLoop;
     }
 
-        public List<GamePlay> getHistory() {
+    public List<HistoryMove> getHistory() {
         return history;
     }
 
-    public void setHistory(List<GamePlay> history) {
+    public void setHistory(List<HistoryMove> history) {
         this.history = history;
     }
 
-    public void addPlay(GamePlay play) {
+    public void addPlay(HistoryMove play) {
         history.add(play);
     }
 
-    public GamePlay undoLastPlay() {
+    public HistoryMove undoLastPlay() {
         if (!history.isEmpty()) {
-            return history.remove(history.size() - 1);
+            return history.removeLast();
         }
         return null;
     }

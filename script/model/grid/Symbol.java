@@ -1,4 +1,6 @@
-package model;
+package model.grid;
+
+import model.util.EnumSymbols;
 
 public class Symbol extends CellContent {
     private EnumSymbols symbol;

@@ -1,11 +1,13 @@
-package model;
+package model.util;
 
-public class GamePlay {
+import model.grid.Symbol;
+
+public class HistoryMove {
     private Symbol playerSymbol;
     private int x;
     private int y;
 
-    public GamePlay(Symbol playerSymbol, int x, int y) {
+    public HistoryMove(Symbol playerSymbol, int x, int y) {
         this.playerSymbol = playerSymbol;
         this.x = x;
         this.y = y;

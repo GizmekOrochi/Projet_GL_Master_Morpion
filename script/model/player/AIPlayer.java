@@ -1,6 +1,8 @@
-package model;
+package model.player;
 
-public class IAPlayer extends Player {
+import model.grid.AlgorithmGrid;
+
+public class AIPlayer extends Player {
     private int agressivity;
     private AlgorithmGrid algorithmGrid;
 

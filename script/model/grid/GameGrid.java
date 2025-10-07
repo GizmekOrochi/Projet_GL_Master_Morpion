@@ -1,4 +1,4 @@
-package model;
+package model.grid;
 
 public class GameGrid {
     private int sizeX;
