@@ -1,5 +1,7 @@
 package model.grid;
 
+import model.util.EnumSymbols;
+
 public abstract class CellContent {
     protected int Xpos;
     protected int Ypos;
@@ -18,5 +20,11 @@ public abstract class CellContent {
 
     public void setYpos(int ypos) {
         this.Ypos = ypos;
+    }
+
+    public boolean containsSymbol(EnumSymbols symbol) {
+        if(this instanceof Symbol)
+            return ((Symbol) this).getSymbol() == symbol;
+        else return false;
     }
 }
