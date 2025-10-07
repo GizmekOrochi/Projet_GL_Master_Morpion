@@ -1,13 +1,13 @@
 package model.player;
 
 import model.grid.AlgorithmGrid;
-import model.util.HistoryMove;
+import model.util.PlayerMove;
 
 public abstract class Player {
     private AlgorithmGrid grid;
     private int score;
 
-    public abstract HistoryMove takeTurn();
+    public abstract PlayerMove takeTurn();
     public void placeSymbol() {}
     public void removeSymbol() {}
 

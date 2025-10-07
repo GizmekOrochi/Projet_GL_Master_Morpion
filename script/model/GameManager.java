@@ -14,7 +14,7 @@ public class GameManager {
 
     private GameGrid gameGrid;
     private List<Player> players = new ArrayList<>();
-    private List<HistoryMove> history = new ArrayList<>();
+    private List<PlayerMove> history = new ArrayList<>();
 
     public void initializeGame() {}
     public void gameLoop() {
@@ -94,7 +94,9 @@ public class GameManager {
     // =============================================
 
     public void playerTurn(Player player) {
-        player.takeTurn();
+        PlayerMove move = player.takeTurn();
+        updateHistory(move);
+        updatePlayerScore();
     }
     public void gameHint() {}
     public void changeRoles() {}
@@ -109,19 +111,32 @@ public class GameManager {
         this.pause = gameLoop;
     }
 
-    public List<HistoryMove> getHistory() {
+    public List<PlayerMove> getHistory() {
         return history;
     }
 
-    public void setHistory(List<HistoryMove> history) {
+    public void setHistory(List<PlayerMove> history) {
         this.history = history;
     }
 
-    public void addPlay(HistoryMove play) {
+    private void updateHistory(PlayerMove move) {
+        // On n'ajoute le move à l'historique QUE si c'est un ajout
+        if(move.getAction() == 1)
+            history.add(move);
+        // Si ce n'est pas un ajout, il faut retirer le move correspondant dans l'historique
+        else {
+            for(PlayerMove m : history) {
+                if(m.corresponds(move))
+                    history.remove(m);
+            }
+        }
+    }
+
+    public void addPlay(PlayerMove play) {
         history.add(play);
     }
 
-    public HistoryMove undoLastPlay() {
+    public PlayerMove undoLastPlay() {
         if (!history.isEmpty()) {
             return history.removeLast();
         }

@@ -2,17 +2,24 @@ package model.util;
 
 import model.grid.Symbol;
 
-public class HistoryMove {
+public class PlayerMove {
     private Symbol playerSymbol;
     private int x;
     private int y;
     private int action; // 0 = Suppression, 1 = Ajout de symbole
 
-    public HistoryMove(Symbol playerSymbol, int x, int y, int action) {
+    public PlayerMove(Symbol playerSymbol, int x, int y, int action) {
         this.playerSymbol = playerSymbol;
         this.x = x;
         this.y = y;
         this.action = action;
+    }
+
+    public int getAction() {return action;}
+
+    // same coordinates but opposite action
+    public boolean corresponds(PlayerMove move) {
+        return this.x == move.x && this.y == move.y && this.action != move.action;
     }
 
     public Symbol getplayerSymbol() {
