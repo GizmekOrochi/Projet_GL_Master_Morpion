@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import model.grid.*;
 import model.player.*;
 import model.util.*;
@@ -113,6 +112,7 @@ public class GameManager {
             }
         }
         return result;
+
     }
     // checkEndOfGame → vérifie toutes les séquences de toutes les cases
     public boolean checkEndOfGame() {

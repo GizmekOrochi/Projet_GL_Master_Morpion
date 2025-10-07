@@ -6,6 +6,11 @@ public abstract class CellContent {
     protected int Xpos;
     protected int Ypos;
 
+    CellContent(int x, int y) {
+        this.Xpos = x;
+        this.Ypos = y;
+    }
+
     public int getXpos() {
         return Xpos;
     }
@@ -23,8 +28,8 @@ public abstract class CellContent {
     }
 
     public boolean containsSymbol(EnumSymbols symbol) {
-        if(this instanceof Symbol)
-            return ((Symbol) this).getSymbol() == symbol;
+        if(this instanceof Symbol symbol1)
+            return symbol1.getSymbol() == symbol;
         else return false;
     }
 }

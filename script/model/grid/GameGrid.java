@@ -1,56 +1,64 @@
 package model.grid;
 
 public class GameGrid {
-    private int sizeX;
-    private int sizeY;
-    private CellContent[][] grid;
+    private int matrixSizeX;
+    private int matrixSizeY;
+    private final int listSize;
+    private CellContent[] grid;
 
-    public GameGrid(int sizeX, int sizeY) {
-        this.sizeX = sizeX;
-        this.sizeY = sizeY;
+    public GameGrid(int matrixSizeX, int matrixSizeY) {
+        this.matrixSizeX = matrixSizeX;
+        this.matrixSizeY = matrixSizeY;
+        this.listSize = matrixSizeX*matrixSizeY;
         initializeGrid();
     }
 
-    public int[] getSize() {
-        return new int[]{sizeX, sizeY};
+    public int getmatrixSizeX() {
+        return matrixSizeX;
     }
 
-    public void setSize(int sizeX, int sizeY) {
-        this.sizeX = sizeX;
-        this.sizeY = sizeY;
-        initializeGrid();
+    public int getmatrixSizeY() {
+        return matrixSizeY;
     }
 
+    public int[] getSize(){
+        return new int[]{matrixSizeX,matrixSizeY};
+    }
     public void initializeGrid() {
-        grid = new CellContent[sizeX][sizeY];
+        this.grid = new CellContent[listSize];
+        int interator = 0;
+        for (int x = 0; x < this.matrixSizeX; x++) {
+            for (int y = 0; y < this.matrixSizeY; y++) {
+                grid[interator] = new Forbidden(x, y);
+                interator++;
+            }
+        }
     }
 
     public void setCell(int x, int y, CellContent content) {
         if (inBounds(x, y)) {
-            grid[x][y] = content;
-            if (content != null) {
-                content.setXpos(x);
-                content.setYpos(y);
+            for (int i = 0; i < this.listSize; i++) {
+                if(grid[i].getXpos() == x && grid[i].getYpos() == y) {
+                    this.grid[i] = content;
+                }
             }
         }
     }
 
     public CellContent getCell(int x, int y) {
         if (inBounds(x, y)) {
-            return grid[x][y];
+            for (int i = 0; i < this.listSize; i++) {
+                if(grid[i].getXpos() == x && grid[i].getYpos() == y) {
+                    return this.grid[i];
+                }
+            }
         }
         return null;
     }
 
-    public void clearGrid() {
-        for (int i = 0; i < sizeX; i++) {
-            for (int j = 0; j < sizeY; j++) {
-                grid[i][j] = null;
-            }
-        }
+    public boolean inBounds(int x, int y) {
+        return x >= 0 && x < matrixSizeX && y >= 0 && y < matrixSizeY;
     }
 
-    public boolean inBounds(int x, int y) {
-        return x >= 0 && x < sizeX && y >= 0 && y < sizeY;
-    }
+    
 }
